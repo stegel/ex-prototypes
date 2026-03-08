@@ -101,3 +101,4 @@ Your prototype will appear on the production site shortly after pushing.
 - [DaisyUI Components](https://daisyui.com/components/)
 - [Tailwind CSS v4](https://tailwindcss.com/docs)
 - [Next.js Documentation](https://nextjs.org/docs)
+
