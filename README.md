@@ -7,8 +7,8 @@ A lightweight repo for creating and previewing interactive design prototypes. Bu
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/stegel/prototypes.git
-cd prototypes
+git clone https://github.com/stegel/ex-prototypes.git
+cd ex-prototypes
 ```
 
 ### 2. Install dependencies
