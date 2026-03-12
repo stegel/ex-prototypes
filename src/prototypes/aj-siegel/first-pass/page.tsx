@@ -10,7 +10,7 @@ export default function FirstPass() {
       <div className="card bg-bg shadow-card max-w-sm w-full">
         <div className="card-body items-center text-center gap-6">
           <h2 className="card-title text-text-primary">Counter</h2>
-          <span className="text-7xl font-mono font-bold text-text-primary tabular-nums">
+          <span className="text-7xl font-mono font-bold tabular-nums" style={{ color: '#228B22' }}>
             {count}
           </span>
           <div className="flex gap-4">
