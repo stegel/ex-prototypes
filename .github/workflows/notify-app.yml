@@ -4,13 +4,16 @@ on:
   push:
     branches: [main]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger submodule update in prototype-playground
         run: |
-          curl -X POST \
+          curl --fail -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.APP_REPO_TOKEN }}" \
             https://api.github.com/repos/stegel/prototype-playground/dispatches \
