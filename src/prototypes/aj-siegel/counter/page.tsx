@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
+import { Icon } from "@/components/icons";
 
 type Mode = "stopwatch" | "timer";
 
@@ -209,27 +210,30 @@ export default function Counter() {
           <div className="flex justify-center gap-3">
             {!isRunning ? (
               <button
-                className="btn btn-primary btn-lg px-8"
+                className="btn btn-soft bg-blue-100 hover:bg-blue-200 text-blue-700 border-0 btn-lg px-8 gap-2"
                 onClick={handleStart}
                 disabled={mode === "timer" && timerDuration === 0}
               >
+                <Icon name="clock" size={18} />
                 {time === 0 || (mode === "timer" && time === timerDuration)
                   ? "Start"
                   : "Resume"}
               </button>
             ) : (
               <button
-                className="btn btn-warning btn-lg px-8"
+                className="btn btn-soft bg-amber-100 hover:bg-amber-200 text-amber-700 border-0 btn-lg px-8 gap-2"
                 onClick={handlePause}
               >
+                <Icon name="clock" size={18} />
                 Pause
               </button>
             )}
             <button
-              className="btn btn-ghost btn-lg"
+              className="btn btn-soft bg-blue-50 hover:bg-blue-100 text-blue-600 border-0 btn-lg gap-2"
               onClick={handleReset}
               disabled={time === 0 && mode === "stopwatch"}
             >
+              <Icon name="x" size={18} />
               Reset
             </button>
           </div>
@@ -244,7 +248,7 @@ export default function Counter() {
                 {[30, 60, 120, 300, 600].map((secs) => (
                   <button
                     key={secs}
-                    className="btn btn-sm btn-ghost"
+                    className="btn btn-sm btn-soft bg-blue-50 hover:bg-blue-100 text-blue-600 border-0 gap-1"
                     onClick={() => {
                       const mins = Math.floor(secs / 60);
                       const s = secs % 60;
@@ -255,6 +259,7 @@ export default function Counter() {
                       elapsedRef.current = duration;
                     }}
                   >
+                    <Icon name="clock" size={12} />
                     {secs < 60
                       ? `${secs}s`
                       : secs < 3600
