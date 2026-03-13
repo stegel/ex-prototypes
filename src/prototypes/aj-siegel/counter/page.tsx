@@ -195,8 +195,7 @@ export default function Counter() {
           >
             <span
               className={cn(
-                "text-6xl font-mono font-bold tabular-nums",
-                isTimerComplete ? "text-green-500" : "text-text-primary"
+                "text-6xl font-mono font-bold tabular-nums text-green-500"
               )}
             >
               {formatTime(time)}
