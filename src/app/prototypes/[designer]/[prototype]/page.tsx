@@ -1,11 +1,9 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import fs from "node:fs";
 import path from "node:path";
 import dynamic from "next/dynamic";
 import { discoverLocalPrototypes } from "@/lib/discovery";
-import { DarkModeToggle } from "@/components/layout/dark-mode-toggle";
-import { Icon } from "@/components/icons";
+import { PrototypeToolbar } from "@/components/layout/prototype-toolbar";
 import type { PrototypeMeta } from "@/lib/types";
 
 interface Props {
@@ -63,23 +61,11 @@ export default async function PrototypePage({ params }: Props) {
 
   return (
     <div>
-      <nav className="flex items-center justify-between px-4 py-2 border-b border-border bg-bg">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/"
-            className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary transition-colors"
-          >
-            <Icon name="arrow-left" size={14} />
-            Back
-          </Link>
-          {meta && (
-            <span className="text-sm font-medium text-text-primary">
-              {meta.title}
-            </span>
-          )}
-        </div>
-        <DarkModeToggle />
-      </nav>
+      <PrototypeToolbar
+        meta={meta}
+        designer={designer}
+        protoSlug={protoSlug}
+      />
       <PrototypeComponent />
     </div>
   );
