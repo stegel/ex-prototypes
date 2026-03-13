@@ -16,7 +16,7 @@ EXCLUDED_EXTENSIONS = {
 MAX_FILE_SIZE = 50_000
 
 
-def build_repo_context(root: Path) -> str:
+def build_repo_context(root: Path, prototype_path: str = "") -> str:
     parts = []
     for path in sorted(root.rglob("*")):
         if any(ex in path.parts for ex in EXCLUDED_DIRS):
@@ -27,6 +27,15 @@ def build_repo_context(root: Path) -> str:
             continue
         if path.stat().st_size > MAX_FILE_SIZE:
             continue
+
+        # If prototype_path specified, only include that prototype + shared files
+        if prototype_path:
+            rel = str(path.relative_to(root))
+            proto_dir = f"src/prototypes/{prototype_path}"
+            is_prototype_file = rel.startswith(proto_dir)
+            is_shared_file = not rel.startswith("src/prototypes/")
+            if not is_prototype_file and not is_shared_file:
+                continue
         try:
             content = path.read_text(encoding="utf-8", errors="ignore")
             parts.append(f"### {path.relative_to(root)}\n{content}")
@@ -56,6 +65,7 @@ def apply_changes(changes: list[dict], root: Path):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--description", required=True)
+    parser.add_argument("--prototype-path", default="")
     parser.add_argument("--notes", default="")
     parser.add_argument("--notion-id", required=True)
     args = parser.parse_args()
@@ -100,6 +110,7 @@ Rules:
 ---
 FEATURE REQUEST: {args.description}
 {f"DETAILS: {args.notes}" if args.notes else ""}
+{f"TARGET PROTOTYPE: src/prototypes/{args.prototype_path} — only modify files within this directory unless shared utilities need updating." if args.prototype_path else ""}
 NOTION ID: {args.notion_id}
 
 ---
