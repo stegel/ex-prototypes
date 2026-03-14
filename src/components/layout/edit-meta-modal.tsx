@@ -26,6 +26,7 @@ export function EditMetaModal({
   const [newTag, setNewTag] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [saveMode, setSaveMode] = useState<"filesystem" | "github" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
 
@@ -36,6 +37,7 @@ export function EditMetaModal({
       setTags(meta.tags || []);
       setNewTag("");
       setShowSuccess(false);
+      setSaveMode(null);
       setError(null);
       modalRef.current?.showModal();
     } else {
@@ -89,6 +91,8 @@ export function EditMetaModal({
         throw new Error("Failed to update metadata");
       }
 
+      const data = await response.json() as { success: boolean; mode: "filesystem" | "github" };
+      setSaveMode(data.mode);
       setShowSuccess(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -120,16 +124,28 @@ export function EditMetaModal({
             <p className="text-text-secondary text-sm mb-4">
               Your metadata has been updated locally.
             </p>
-            <div className="alert alert-info text-left mb-4">
-              <Icon name="code" size={18} />
-              <div>
-                <p className="font-medium">Don&apos;t forget to commit!</p>
-                <p className="text-sm opacity-80">
-                  Run <code className="bg-bg-tertiary px-1 rounded">git commit</code> and{" "}
-                  <code className="bg-bg-tertiary px-1 rounded">git push</code> to save your changes.
-                </p>
+            {saveMode === "github" ? (
+              <div className="alert alert-success text-left mb-4">
+                <Icon name="code" size={18} />
+                <div>
+                  <p className="font-medium">Committed to GitHub!</p>
+                  <p className="text-sm opacity-80">
+                    Run <code className="bg-bg-tertiary px-1 rounded">git pull</code> locally to sync your changes.
+                  </p>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="alert alert-info text-left mb-4">
+                <Icon name="code" size={18} />
+                <div>
+                  <p className="font-medium">Don&apos;t forget to commit!</p>
+                  <p className="text-sm opacity-80">
+                    Run <code className="bg-bg-tertiary px-1 rounded">git commit</code> and{" "}
+                    <code className="bg-bg-tertiary px-1 rounded">git push</code> to save your changes.
+                  </p>
+                </div>
+              </div>
+            )}
             <button className="btn btn-primary" onClick={handleClose}>
               Close
             </button>
