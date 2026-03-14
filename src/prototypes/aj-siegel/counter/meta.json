@@ -3,6 +3,11 @@
   "description": "A stopwatch and timer app that can count up or count down from a set time.",
   "author": "aj-siegel",
   "date": "2026-03-09",
-  "tags": ["timer", "stopwatch", "utility"],
+  "tags": [
+    "timer",
+    "stopwatch",
+    "utility",
+    "practice"
+  ],
   "status": "in-progress"
 }
