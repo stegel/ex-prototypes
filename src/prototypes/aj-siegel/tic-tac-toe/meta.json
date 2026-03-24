@@ -1,0 +1,8 @@
+{
+  "title": "Tic Tac Toe",
+  "description": "A simple two-player tic tac toe game with win detection and game reset.",
+  "author": "aj-siegel",
+  "date": "2026-03-09",
+  "tags": ["game", "interactive"],
+  "status": "in-progress"
+}
